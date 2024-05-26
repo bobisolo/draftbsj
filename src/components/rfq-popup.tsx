@@ -1,6 +1,7 @@
-import {createSignal} from "solid-js";
-import Actionable from "./actionable";
-import ActionableEditable from "./actionable-editable";
+import {useRfq,} from "../context/rfq";
+import PriceActionableEditableSpinner from "./price-actionable-editable-spinner";
+import {BidMidAskPanelWithLabel} from "./bid-mid-ask-panel";
+import ActionableProba, {ActionableProbaList} from "./actionable-proba";
 
 type RfqType = {
     id: string;
@@ -8,45 +9,49 @@ type RfqType = {
 }
 
 function RfqPopup() {
-    const initialRfq: RfqType = {
-        id: "TRADEWEB_EUCORP_129565",
-        price: 105.365
-    }
-
-    const [rfq, setRfq] = createSignal(initialRfq);
-
-    const updatePrice = (value: number) => {
-        const newRfq: RfqType = {...rfq(), price: value};
-        setRfq(newRfq);
-    }
+    const rfq = useRfq();
 
     return (
         <div class={"h-screen max-w-7xl border border-spacing-1 mx-auto"}>
             <div class={"my-5 h-32 bg-red-600"}>
                 <p>
-                    RfqPrice: {rfq().price}
+                    RfqPrice: {rfq?.price}
                 </p>
             </div>
 
-            <p class={"my-2"}>
-                Bid: <Actionable value={123.568} onClick={(value)  => {updatePrice(value);}} />
-            </p>
-            <p class={"my-2"}>
-                Mid: <Actionable value={122.659} onClick={(value) => {
-                updatePrice(value);
-            }}/>
-            </p>
-            <p class={"my-2"}>
-                Ask: <Actionable value={121.856} onClick={(value) => {
-                updatePrice(value);
-            }}/>
+            <div class={"flex space-x-4"}>
+                <div class={" w-[25rem]"}> {/* Bloc pricing */}
+                    <div class={"px-4 border mx-2"}>
+                        <div class={"flex my-3"}>
+                            <span>Pricing</span>
+                            {/*<div>*/}
+                            {/*    Apply drop*/}
+                            {/*</div>*/}
+                        </div>
+                        <div class={"flex items-center"}>
+                            <span class={"w-14 text-xs"}>Price</span>
+                            <PriceActionableEditableSpinner value={rfq?.price!}/>
+                        </div>
 
-            </p>
-            <p class={"my-2"}>
-                Price: <ActionableEditable value={121.856} onClick={(value) => {
-                updatePrice(value);
-            }}/>
-            </p>
+                        <BidMidAskPanelWithLabel bma={rfq?.model!} label={"Model"}/>
+                        <BidMidAskPanelWithLabel bma={rfq?.tweb!} label={"Tweb"}/>
+                        <BidMidAskPanelWithLabel bma={rfq?.composite!} label={"Composite"}/>
+                        <BidMidAskPanelWithLabel bma={rfq?.cp!} label={"CP+"}/>
+                    </div>
+                    <div class={"px-4 mx-2 mt-2 border py-2"}>
+                        <div class={"pb-2"}>AMM</div>
+                        <ActionableProbaList />
+                    </div>
+                </div>
+                <div class={" border w-44 flex mx-auto items-center text-center  justify-center"}>
+                    <div class={""}>
+                        <button class={"bg-gray-300 px-2 w-32 py-1 rounded my-1"}>Send</button>
+                        <button class={"bg-gray-400 px-2 w-32 py-1 rounded my-1"}>Send Auto</button>
+                        <button class={"bg-gray-300 px-2 w-32 py-1 rounded my-1"}>Stop Auto</button>
+                        <button class={"bg-gray-500 px-2 w-32 py-1 rounded my-1"}>Reject</button>
+                    </div>
+                </div>
+            </div>
 
         </div>
     );
