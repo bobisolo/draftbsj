@@ -13,7 +13,7 @@ const ActionableProba = ({proba}: {proba: Proba}) => {
         }}>
             <span class={" text-sm font-semibold"}>{proba.value}%</span>
             <span
-                class={"px-[2px]border-dotted border-b-2 border-black w-16 h-7 items-center flex justify-center "}>
+                class={"px-[2px] border-dotted border-b-2 border-black w-16 h-7 items-center flex justify-center "}>
             <Show when={proba.price.isValid}>
                 <span>{proba.price.value.toFixed(3)}</span>
             </Show>

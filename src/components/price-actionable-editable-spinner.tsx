@@ -67,7 +67,7 @@ const PriceActionableEditableSpinner = (props) => {
             <Show
                 when={!editable()}
             >
-                <span class={"px-[2px] cursor-pointer border-b-2 border-black w-16 flex justify-center hover:bg-gray-200"}
+                <span class={"px-[2px] cursor-pointer border-b-2 border-black w-[80px] text-[24px] flex justify-center hover:bg-gray-200"}
                       onClick={() => setEditable(true)}>
                     {textValue()}
                 </span>

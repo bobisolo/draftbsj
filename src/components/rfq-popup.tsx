@@ -1,10 +1,9 @@
-import {Price, useRfq,} from "../context/rfq";
+import {useRfq,} from "../context/rfq";
 import PriceActionableEditableSpinner from "./price-actionable-editable-spinner";
 import {BidMidAskPanelWithLabel} from "./bid-mid-ask-panel";
-import ActionableProba, {ActionableProbaList} from "./actionable-proba";
-import PriceActionableEditable from "./price-actionable-editable";
+import {ActionableProbaList} from "./actionable-proba";
 import SpreadActionableSpinner from "./spread-actionable-spinner";
-import IndicatorValue from "./indicator-value";
+import {IconCopy} from "@tabler/icons-solidjs";
 
 type RfqType = {
     id: string;
@@ -16,10 +15,32 @@ function RfqPopup() {
 
     return (
         <div class={"h-screen max-w-7xl border border-spacing-1 mx-auto"}>
-            <div class={"my-5 h-32 bg-red-600"}>
-                <p>
-                    RfqPrice: {rfq?.price}
-                </p>
+            <div class={"my-5 bg-gray-100  w-[672px]"}>
+                <div class={"h-16 justify-center text-center items-center flex"}>
+                    header
+                </div>
+                <div class={"flex w-full"}>
+                    <div class={"flex-1  px-1"}>
+                        <div class={"bg-gray-300 space-x-2 flex items-center h-10"}>
+                            <span>Buy</span><span class={"font-bold underline"}>1.00M</span><span>ACACB 3/2/2037 1.500</span>
+                            <span><IconCopy size={20} class={"cursor-pointer mx-1 font-semibold"} /> </span> in <span class={"font-bold"}>EUR</span>
+                        </div>
+                        <div class={"flex justify-between"}>
+                            <div>
+                                <span class={"text-sm"}>Settl. Date:</span>
+                                <span class={"mx-1 font-semibold text-sm"}>26 Apr 2024 (T+2)</span>
+                            </div>
+                            <div>
+                                <span class={"text-sm"}>RFQ Owner:</span>
+                                <span class={"mx-1 font-semibold text-sm"}>None</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class={"bg-gray-300 w-[70px] flex flex-col justify-center items-center py-1"}>
+                        <span class={"font-semibold"}>Tier</span>
+                        <span class={"text-xl font-bold"}>P0</span>
+                    </div>
+                </div>
             </div>
 
             <div class={"flex space-x-4"}>
@@ -34,6 +55,7 @@ function RfqPopup() {
                         <div class={"flex items-center"}>
                             <span class={"w-14 text-xs"}>Price</span>
                             <PriceActionableEditableSpinner value={rfq?.price!}/>
+
                         </div>
 
                         <BidMidAskPanelWithLabel bma={rfq?.model!} label={"Model"}/>
